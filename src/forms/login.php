@@ -1,4 +1,5 @@
 <?php
+require '../classes/FormValidator.php';
 require '../classes/LoginValidator.php';
 require '../classes/DBUpdater.php';
 require '../settings/constants.php';
