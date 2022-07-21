@@ -4,7 +4,7 @@ abstract class FormValidator
 {
     private string $login, $password;
 
-    public abstract function isEmpty();
+    protected abstract function isEmpty(string $field);
     public abstract function validateLogin();
     public abstract function validatePassword();
 }
