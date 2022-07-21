@@ -1,6 +1,6 @@
 <?php
 
-class SignupValidator extends Validator
+class SignupValidator extends FromValidator
 {
     private string $email;
     private string $name;

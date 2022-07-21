@@ -1,5 +1,5 @@
 <?php
-require '../classes/Validator.php';
+require '../classes/LoginValidator.php';
 require '../classes/DBUpdater.php';
 require '../settings/constants.php';
 
@@ -8,7 +8,7 @@ $data = $_POST;
 
 if (isset($data['do_login'])) {
 
-    $Validator = new Validator($data['login'], $data['password']);
+    $Validator = new LoginValidator($data['login'], $data['password']);
     $error = $Validator->validateLogin();
     $error = $Validator->validatePassword();
 

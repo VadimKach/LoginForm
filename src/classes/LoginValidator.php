@@ -1,6 +1,6 @@
 <?php
 
-class Validator
+class LoginValidator extends FormValidator
 {
     private string $login;
     private string $password;
