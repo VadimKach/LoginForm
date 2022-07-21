@@ -2,16 +2,18 @@
 require '../classes/Validator.php';
 require '../classes/DBUpdater.php';
 require '../settings/constants.php';
+
 $fileName = "LoginUsers.json";
 $data = $_POST;
+
 if (isset($data['do_login'])) {
 
-    $loginValidator = new Validator($data['login'], $data['password']);
-    $error = $loginValidator->validateLogin();
-    $error = $loginValidator->validatePassword();
+    $Validator = new Validator($data['login'], $data['password']);
+    $error = $Validator->validateLogin();
+    $error = $Validator->validatePassword();
 
-    $dbData = new DBUpdater($data['login'], $data['password'], $fileName);
-    if (!$dbData->checkIsRecordExist())
+    $dbData = new DBUpdater($fileName);
+    if (!$dbData->checkIsRecordExist($data['login'], BLANK))
         $error = array("Пользователь с таким логином не найден!");
 
     if (!empty($error)) {
