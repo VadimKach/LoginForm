@@ -107,3 +107,4 @@
         <button type="submit" name= "do_signup">Зарегистрироваться</button>
 
     </p>    
+</form>>
