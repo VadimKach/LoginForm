@@ -8,15 +8,13 @@ if (isset($data['do_login'])) {
 
     $loginValidator = new Validator($data['login'], $data['password']);
     $error = $loginValidator->validateLogin();
-        echo '<div style="color: red;">' . array_shift($error) . '</div><hr>';
-
     $error = $loginValidator->validatePassword();
-    if (!empty($error))
-        echo '<div style="color: red;">' . array_shift($error) . '</div><hr>';
 
     $dbData = new DBUpdater($data['login'], $data['password'], $fileName);
-    if (!$dbData->checkIsRecordExist()) {
+    if (!$dbData->checkIsRecordExist())
         $error = array("Пользователь с таким логином не найден!");
+
+    if (!empty($error)) {
         echo '<div style="color: red;">' . array_shift($error) . '</div><hr>';
     }
 }
