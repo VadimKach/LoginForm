@@ -55,6 +55,10 @@ abstract class FormValidator
 
     protected function validatePaswordChars()
     {
-//        return $error;
+        if (preg_match("/^(([a-zA-Z' -])|([а-яА-ЯЁёІіЇїҐґЄє' -])| [0-9])$/u"($this->password)))
+            $error = array("Пароль должен состоять только из букв и цифр");
+        else
+            $error = array();
+        return $error;
     }
 }

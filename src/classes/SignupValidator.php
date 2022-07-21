@@ -16,11 +16,12 @@ class SignupValidator extends FromValidator
     {
         $error = $this->isEmpty($this->email);
         if (!empty($error)) {
-            if(!preg_match("/^(([a-zA-Z' -]{2,30})|([а-яА-ЯЁёІіЇїҐґЄє' -]{2,30}))$/u", $this->email))
+            if (!preg_match("/^(([a-zA-Z' -]{2,30})|([а-яА-ЯЁёІіЇїҐґЄє' -]{2,30}))$/u", $this->email))
                 return array("Неверный email");
         }
         return $error;
     }
+
     public function validateName()
     {
         $error = $this->isEmpty($this->name);
@@ -43,13 +44,13 @@ class SignupValidator extends FromValidator
             $error = array();
         return $error;
     }
+
     private function validateNameChars()
     {
-        if (preg_match("/^(([a-zA-Z' -])|([а-яА-ЯЁёІіЇїҐґЄє' -]))$/u"($this->name)))
+        if (preg_match("/^(([a-zA-Z' -])|([а-яА-ЯЁёІіЇїҐґЄє' -]))$/u", $this->name)))
              $error = array("Имя должно состоять только из букв");
         else
              $error = array();
         return $error;
-//        return $error;
     }
 }
