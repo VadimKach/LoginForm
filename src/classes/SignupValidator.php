@@ -1,6 +1,6 @@
 <?php
 
-class SignupValidator extends FromValidator
+class SignupValidator extends FormValidator
 {
     private string $email;
     private string $name;
@@ -17,7 +17,9 @@ class SignupValidator extends FromValidator
         $error = $this->isEmpty($this->email);
         if (!empty($error)) {
             if (!preg_match("/^(([a-zA-Z' -]{2,30})|([а-яА-ЯЁёІіЇїҐґЄє' -]{2,30}))$/u", $this->email))
-                return array("Неверный email");
+                $error = array("Неверный email");
+            else
+                $error = array();
         }
         return $error;
     }
