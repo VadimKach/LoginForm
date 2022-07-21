@@ -47,7 +47,7 @@ class SignupValidator extends FromValidator
 
     private function validateNameChars()
     {
-        if (preg_match("/^(([a-zA-Z' -])|([а-яА-ЯЁёІіЇїҐґЄє' -]))$/u", $this->name)))
+        if (!preg_match("/^(([a-zA-Z' -])|([а-яА-ЯЁёІіЇїҐґЄє' -]))$/u", $this->name))
              $error = array("Имя должно состоять только из букв");
         else
              $error = array();
