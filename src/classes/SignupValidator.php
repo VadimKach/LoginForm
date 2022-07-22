@@ -16,19 +16,18 @@ class SignupValidator extends FormValidator
     {
         $error = $this->isEmpty($this->email);
         if (!empty($error)) {
-            $error .= ' E-mail';
+            return $error . ' E-mail';
         } else {
 //            if (!preg_match("/^(([a-zA-Z' -]{2,30})|([а-яА-ЯЁёІіЇїҐґЄє' -]{2,30}))$/u", $this->email))
 //                $error = 'Неверный email';
         }
-        return $error;
     }
 
     public function validateName()
     {
         $error = $this->isEmpty($this->name);
         if (!empty($error)) {
-            $error .= ' Имя';
+            return $error . ' Имя';
         } else {
             $error = $this->validateNameLen();
             if (!empty($error))
@@ -37,7 +36,6 @@ class SignupValidator extends FormValidator
             if (!empty($error))
                 return $error;
         }
-        return $error;
     }
 
     private function validateNameLen()
