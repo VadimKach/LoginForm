@@ -11,12 +11,15 @@ if (isset($data['do_login'])) {
 
     $Validator = new LoginValidator($data['login'], $data['password']);
     $error = $Validator->validateLogin();
-    Handler::printError($error);
+    if (!empty($error))
+        Handler::printError($error);
     $error = $Validator->validatePassword();
-    Handler::printError($error);
+    if (!empty($error))
+        Handler::printError($error);
 
+    $fileName = "LoginUsers.json";
     if (empty($error)) {
-        $db = new DBUpdater(FILE_NAME);
+        $db = new DBUpdater($fileName);
         if (!$db->checkIfRecordExist($data['login'], BLANK)) {
             $error = 'Пользователь с таким логином не найден!';
             Handler::printError($error);

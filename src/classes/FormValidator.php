@@ -49,14 +49,12 @@ abstract class FormValidator
     protected function validatePaswordLen()
     {
         if (strlen($this->password) < 6)
-            $error = 'Пароль должен быть не менее 6-ти симвлов';
-        return $error;
+            return 'Пароль должен быть не менее 6-ти симвлов';
     }
 
     protected function validatePaswordChars()
     {
         if (preg_match("/^(([a-zA-Z' -])|([а-яА-ЯЁёІіЇїҐґЄє' -])| [0-9])$/u", ($this->password)))
-            $error = 'Пароль должен состоять только из букв и цифр';
-        return $error;
+            return 'Пароль должен состоять только из букв и цифр';
     }
 }

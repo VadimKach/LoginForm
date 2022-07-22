@@ -2,37 +2,26 @@
 
 class DBUpdater
 {
-    private $jsonArray;
     private string $fileName;
 
     public function __constructor(string $inFileName)
     {
         $this->fileName = $inFileName;
-        $this->readFile();
     }
 
-
-    private function readFile()
-    {
-        if (file_exists($this->fileName)) {
-            $json = file_get_contents($this->fileName);
-            $this->jsonArray = json_decode($json, true);
-        } else {
-            $this->jsonArray = [];
-        }
-    }
 
     public function checkIfRecordExist(string $login, string $email)
     {
         $isFound = false;
-        if (!empty($this->jsonArray)) {
+        $jsonArray = $this->readFile();
+        if (!empty($jsonArray)) {
             if (strval($email) != strval(BLANK)) {
-                foreach ($this->jsonArray as $key) {
+                foreach ($jsonArray as $key) {
                     if ((strval($key->login) == strval($login)) && (strval($key->email) == strval($email)))
                         $isFound = true;
                 }
             } else {
-                foreach ($this->jsonArray as $key) {
+                foreach ($jsonArray as $key) {
                     if (strval($key->login) == strval($login))
                         $isFound = true;
                 }
@@ -41,12 +30,8 @@ class DBUpdater
         return $isFound;
     }
 
-    public function workWithData(string $data, string $mode)
+    public function workWithData(array $data, string $mode)
     {
-        $error = $this->checkMode($mode) ? array("Неверный режим работы с данными") : array("");
-        if (!empty($error))
-            return $error;
-
         switch ($mode) {
             case ADD_RECORD;
                 $error = $this->addRecord($data);
@@ -57,37 +42,39 @@ class DBUpdater
                 break;
 
             case DELETE_RECORD;
-                $error = $this->deleteRecord();
+                $error = $this->deleteRecord($data['login'], $data['email']);
                 break;
+
+            default:
+                $error = "Неверный режим работы с файлом";
         }
-        if (!empty($error))
-            return $error;
+        return $error;
 
     }
 
-    private function addRecord(string $data)
+    private function addRecord(array $data)
     {
-//        $this->jsonArray
-        file_put_contents($this->fileName, $this->jsonArray, JSON_FORCE_OBJECT);
+        $jsonArray = json_encode($data);
+        file_put_contents($this->fileName, $jsonArray, JSON_FORCE_OBJECT);
     }
 
-    private function modifyRecord(string $data)
+    private function modifyRecord(array $data)
     {
-        file_put_contents($this->fileName, $this->jsonArray, JSON_FORCE_OBJECT);
+        $jsonArray = json_encode($data);
+        file_put_contents($this->fileName, $jsonArray, JSON_FORCE_OBJECT);
     }
 
     private function deleteRecord(string $login, string $email)
     {
 
+//        file_put_contents($this->fileName, $jsonArray, JSON_FORCE_OBJECT);
     }
 
-
-    private function checkMode(string $iMode)
+    private function readFile()
     {
-        if (strval($iMode) != strval(ADD_RECORD) || strval($iMode) != strval(MODIFY_RECORD) || strval($iMode) != strval(DELETE_RECORD))
-            return false;
-        else
-            return true;
+        if (file_exists($this->fileName)) {
+            $json = file_get_contents($this->fileName);
+            return json_decode($json, true);
+        }
     }
-
 }
