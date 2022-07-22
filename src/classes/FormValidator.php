@@ -14,11 +14,11 @@ abstract class FormValidator
     {
         $error = $this->isEmpty($this->login);
         if (!empty($error)) {
+            $error .= ' Логин';
+        } else {
             $loginLen = strlen($this->login);
             if ($loginLen < 6)
-                $error = array("Логин должен быть не менее 6-ти симвлов");
-            else
-                $error = array();
+                $error = 'Логин должен быть не менее 6-ти симвлов';
         }
         return $error;
     }
@@ -27,6 +27,8 @@ abstract class FormValidator
     {
         $error = $this->isEmpty($this->password);
         if (!empty($error)) {
+            $error .= ' Пароль';
+        } else {
             $error = $this->validatePaswordLen();
             if (!empty($error))
                 return $error;
@@ -40,25 +42,21 @@ abstract class FormValidator
     protected function isEmpty(string $field)
     {
         if (empty(trim($field)))
-            return array("Введите");
+            return 'Введите';
 
     }
 
     protected function validatePaswordLen()
     {
         if (strlen($this->password) < 6)
-            $error = array("Пароль должен быть не менее 6-ти симвлов");
-        else
-            $error = array();
+            $error = 'Пароль должен быть не менее 6-ти симвлов';
         return $error;
     }
 
     protected function validatePaswordChars()
     {
-        if (preg_match("/^(([a-zA-Z' -])|([а-яА-ЯЁёІіЇїҐґЄє' -])| [0-9])$/u"($this->password)))
-            $error = array("Пароль должен состоять только из букв и цифр");
-        else
-            $error = array();
+        if (preg_match("/^(([a-zA-Z' -])|([а-яА-ЯЁёІіЇїҐґЄє' -])| [0-9])$/u", ($this->password)))
+            $error = 'Пароль должен состоять только из букв и цифр';
         return $error;
     }
 }

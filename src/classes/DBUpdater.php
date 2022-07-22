@@ -22,7 +22,7 @@ class DBUpdater
         }
     }
 
-    public function checkIsRecordExist(string $login, string $email)
+    public function checkIfRecordExist(string $login, string $email)
     {
         $isFound = false;
         if (!empty($this->jsonArray)) {
@@ -65,15 +65,6 @@ class DBUpdater
 
     }
 
-
-    private function checkMode(string $iMode)
-    {
-        if (strval($iMode) != strval(ADD_RECORD) || strval($iMode) != strval(MODIFY_RECORD) || strval($iMode) != strval(DELETE_RECORD))
-            return false;
-        else
-            return true;
-    }
-
     private function addRecord(string $data)
     {
 //        $this->jsonArray
@@ -89,4 +80,14 @@ class DBUpdater
     {
 
     }
+
+
+    private function checkMode(string $iMode)
+    {
+        if (strval($iMode) != strval(ADD_RECORD) || strval($iMode) != strval(MODIFY_RECORD) || strval($iMode) != strval(DELETE_RECORD))
+            return false;
+        else
+            return true;
+    }
+
 }

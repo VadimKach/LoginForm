@@ -1,24 +1,26 @@
 <?php
+require '../classes/Handler.php';
 require '../classes/FormValidator.php';
 require '../classes/LoginValidator.php';
 require '../classes/DBUpdater.php';
 require '../settings/constants.php';
 
-$fileName = "LoginUsers.json";
 $data = $_POST;
 
 if (isset($data['do_login'])) {
 
     $Validator = new LoginValidator($data['login'], $data['password']);
     $error = $Validator->validateLogin();
+    Handler::printError($error);
     $error = $Validator->validatePassword();
+    Handler::printError($error);
 
-    $dbData = new DBUpdater($fileName);
-    if (!$dbData->checkIsRecordExist($data['login'], BLANK))
-        $error = array("Пользователь с таким логином не найден!");
-
-    if (!empty($error)) {
-        echo '<div style="color: red;">' . array_shift($error) . '</div><hr>';
+    if (empty($error)) {
+        $db = new DBUpdater(FILE_NAME);
+        if (!$db->checkIfRecordExist($data['login'], BLANK)) {
+            $error = 'Пользователь с таким логином не найден!';
+            Handler::printError($error);
+        }
     }
 }
 ?>
@@ -37,5 +39,4 @@ if (isset($data['do_login'])) {
     <p>
         <button type="submit" name="do_login">Войти</button>
     </p>
-
 </form>

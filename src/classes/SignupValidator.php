@@ -16,6 +16,8 @@ class SignupValidator extends FormValidator
     {
         $error = $this->isEmpty($this->email);
         if (!empty($error)) {
+            $error .= ' E-mail';
+        } else {
             if (!preg_match("/^(([a-zA-Z' -]{2,30})|([а-яА-ЯЁёІіЇїҐґЄє' -]{2,30}))$/u", $this->email))
                 $error = array("Неверный email");
             else
@@ -28,6 +30,8 @@ class SignupValidator extends FormValidator
     {
         $error = $this->isEmpty($this->name);
         if (!empty($error)) {
+            $error .= ' Имя';
+        } else {
             $error = $this->validateNameLen();
             if (!empty($error))
                 return $error;
@@ -41,18 +45,14 @@ class SignupValidator extends FormValidator
     private function validateNameLen()
     {
         if (strlen($this->name) != 2)
-            $error = array("Имя должено быть 2 симвлов");
-        else
-            $error = array();
+            $error = 'Имя должено быть 2 симвлов';
         return $error;
     }
 
     private function validateNameChars()
     {
-        if (!preg_match("/^(([a-zA-Z' -])|([а-яА-ЯЁёІіЇїҐґЄє' -]))$/u", $this->name))
-             $error = array("Имя должно состоять только из букв");
-        else
-             $error = array();
+        if (!preg_match("/^(([a-zA-Z' -]{2,30})|([а-яА-ЯЁёІіЇїҐґЄє' -]{2,30}))$/u", $this->name))
+             $error = 'Имя должно состоять только из букв';
         return $error;
     }
 }
